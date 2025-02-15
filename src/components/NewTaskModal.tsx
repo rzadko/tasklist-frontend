@@ -31,6 +31,7 @@ export const NewTaskModal = ({
             handleSubmit={handleSubmit}
             toggleModal={toggleModal}
             submitText={"Create task"}
+            isDeletable={false}
         >
             <Input
                 title="Title"
