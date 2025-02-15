@@ -1,0 +1,15 @@
+.select-container {
+    margin: 1rem;
+}
+
+.select-label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: bold;
+    text-align: left;
+    margin: 0 0.5rem 0.5rem 0;
+}
+
+.dropdown {
+    width: 12rem;
+}

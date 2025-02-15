@@ -1,35 +1,69 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import "./App.css";
+import { Slider } from "./components/Slider";
+import { TaskManager } from "./TaskManager";
+import { useTaskManager } from "./hooks/useTaskManager";
 
 function App() {
-  const [count, setCount] = useState(0)
+    const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
+    const {
+        tasks,
+        onDragStart,
+        onDrop,
+        newTask,
+        setNewTask,
+        isNewTaskModalOpen,
+        currentStatus,
+        setCurrentStatus,
+        handleNewSubmit,
+        handleDelete,
+        toggleNewTaskModal,
+        updatedTask,
+        setUpdatedTask,
+        isEditTaskModalOpen,
+        handleEditSubmit,
+        toggleEditTaskModal,
+    } = useTaskManager();
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    useEffect(() => {
+        if (isDarkMode) {
+            document.documentElement.setAttribute("data-theme", "dark");
+        } else {
+            document.documentElement.setAttribute("data-theme", "light");
+        }
+    }, [isDarkMode]);
+
+    return (
+        <>
+            <header className="header">
+                <h1 className="header-title">Task list</h1>
+                <Slider
+                    isDarkMode={isDarkMode}
+                    setIsDarkMode={setIsDarkMode}
+                ></Slider>
+            </header>
+            <body>
+                <TaskManager
+                    tasks={tasks}
+                    newTask={newTask}
+                    setNewTask={setNewTask}
+                    currentStatus={currentStatus}
+                    setCurrentStatus={setCurrentStatus}
+                    isNewTaskModalOpen={isNewTaskModalOpen}
+                    toggleNewTaskModal={toggleNewTaskModal}
+                    handleNewSubmit={handleNewSubmit}
+                    handleDelete={handleDelete}
+                    onDragStart={onDragStart}
+                    onDrop={onDrop}
+                    updatedTask={updatedTask}
+                    setUpdatedTask={setUpdatedTask}
+                    isEditTaskModalOpen={isEditTaskModalOpen}
+                    handleEditSubmit={handleEditSubmit}
+                    toggleEditTaskModal={toggleEditTaskModal}
+                />
+            </body>
+        </>
+    );
 }
 
-export default App
+export default App;
